@@ -61,7 +61,7 @@ class Screenshot:
         if left != right and top != bottom:
             bbox = (left, top, right, bottom)
             screenshot = ImageGrab.grab(bbox=(left, top, right, bottom))
-            if not os.path.exists(self.dest_folder):
+            if self.dest_folder and not os.path.exists(self.dest_folder):
                 os.makedirs(self.dest_folder)
             screenshot.save(self.dest_folder + "capture.png")
             print(f"Screenshot saved at {self.dest_folder + 'capture.png'}")
