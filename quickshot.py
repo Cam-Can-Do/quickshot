@@ -1,10 +1,11 @@
 import argparse
 from pynput import keyboard, mouse
 from PIL import ImageGrab
+import os
 
 class Screenshot:
     def __init__(self, dest_folder):
-        self.dest_folder = dest_folder if dest_folder else ""
+        self.dest_folder = os.path.expanduser(dest_folder) if dest_folder else ""
         self.alt_pressed = False
         self.shift_pressed = False
         self.region_capture = False
@@ -60,6 +61,8 @@ class Screenshot:
         if left != right and top != bottom:
             bbox = (left, top, right, bottom)
             screenshot = ImageGrab.grab(bbox=(left, top, right, bottom))
+            if not os.path.exists(self.dest_folder):
+                os.makedirs(self.dest_folder)
             screenshot.save(self.dest_folder + "capture.png")
             print(f"Screenshot saved at {self.dest_folder + 'capture.png'}")
 
