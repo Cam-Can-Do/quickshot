@@ -3,6 +3,8 @@ from pynput import keyboard, mouse
 from PIL import ImageGrab
 import os
 
+# TODO: Add proper logging rather than print statements.
+
 class Screenshot:
     def __init__(self, dest_folder):
         self.dest_folder = os.path.expanduser(dest_folder) if dest_folder else ""
@@ -45,7 +47,7 @@ class Screenshot:
 
     def on_move(self, x, y):
         if self.region_capture:
-            if self.start_x is None or self.start_y is None:
+            if not self.start_x or not self.start_y:
                 self.start_x, self.start_y = x, y
             else:
                 self.end_x, self.end_y = x, y
@@ -67,6 +69,8 @@ class Screenshot:
             print(f"Screenshot saved at {self.dest_folder + 'capture.png'}")
 
     def run(self):
+        print("quickshot running")
+        # TODO: Revisit this try/except logic (needed?)
         try:
             while True:
                 pass  # Keep the main thread alive
